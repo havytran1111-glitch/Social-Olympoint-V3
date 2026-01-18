@@ -253,8 +253,7 @@ See the `LICENSE` file for details.
 * Next.js
 * Google Gemini AI
 * Firebase
-* Prisma
 * Walrus
-* Polar.sh
 * shadcn/ui
+
 
