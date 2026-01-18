@@ -1,0 +1,90 @@
+"use client";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+} from "../ui/sidebar";
+import Credits from "./credits";
+import SidebarMenuItems from "./sidebar-menu-items";
+import { User, Sparkles, Settings } from "lucide-react";
+import Upgrade from "./upgrade";
+import MobileSidebarClose from "./mobile-sidebar-close";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import PlanLimits from "./plan-limits";
+import { useAuth } from "~/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Home, LogOut } from "lucide-react";
+
+export function AppSidebar() {
+  const router = useRouter();
+  const { signOutUser } = useAuth();
+
+  return (
+    <Sidebar className="from-background to-muted/20 border-r-0 bg-gradient-to-b">
+      <SidebarContent className="px-3">
+        <MobileSidebarClose />
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-primary mt-6 mb-8 flex flex-col items-start justify-start px-2">
+            <Link href="/" className="mb-1 flex items-center gap-2">
+              <Sparkles className="text-primary h-6 w-6" />
+              <p className="from-primary to-primary/70 bg-gradient-to-r bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+                My Opoints
+              </p>
+            </Link>
+            <p className="text-muted-foreground ml-8 text-sm font-medium tracking-wide">
+              Editor
+            </p>
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              <SidebarMenuItems />
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="bg-muted/30 border-t p-3">
+        <div className="mb-3">
+          <PlanLimits />
+        </div>
+        <div className="mb-3 flex w-full items-center justify-center gap-2 text-xs">
+          <Credits />
+          <Upgrade />
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full">
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => router.push("/")}>
+              <Home className="mr-2 h-4 w-4" />
+              <span>Home Page</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={signOutUser}>
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Sign Out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
